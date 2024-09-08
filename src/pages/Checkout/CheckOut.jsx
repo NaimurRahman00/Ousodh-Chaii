@@ -58,10 +58,11 @@ const CheckOut = () => {
 
 
   const { user } = useAuth();
+  const userEmail = user?.email;
   const onSubmit = async (data) => {
     try {
       const orderData = {
-        user,
+        userEmail,
         ...data,
         totalAmount: calculateOrderTotalWithExtras(),
         products: cart.map((item) => ({

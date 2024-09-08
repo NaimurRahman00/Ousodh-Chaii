@@ -237,7 +237,8 @@ const Navbar = () => {
       ></ProfileModal>
       {/*  NOTIFICATION */} 
       {
-        showNotification && (<div className="size-96 bg-[#f6f7f8] shadow-md shadow-[#a3a3a3] rounded-lg fixed top-20 right-20 z-50">
+        showNotification && (<div className="w-96 bg-[#f6f7f8] shadow-md shadow-[#a3a3a3] rounded-lg fixed top-20 right-20 z-50">
+          <p className="text-base py-2 px-4 border-b border-gray-400">Your product has been orderd successfully!</p>
         </div>)
       }
     </Container>
