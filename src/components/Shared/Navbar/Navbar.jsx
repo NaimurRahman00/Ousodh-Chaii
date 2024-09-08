@@ -10,6 +10,8 @@ import { RiShoppingCartLine } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import ProfileModal from "../../Mini/ProfileModal";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaBell } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -39,9 +41,21 @@ const Navbar = () => {
     setOpenProfileModal(true);
   };
 
+  // Notification
+  const [showNotification, setShowNotification] = useState(true);
+
+  const handleNotification = () => {
+    setShowNotification(!showNotification)
+  }
+
   return (
     <Container>
-      <div className="flex justify-between items-center bg-[#f6f7f8] rounded-b-3xl px-4 md:px-10 py-3 md:py-6 -mt-4 fixed top-0 left-6 right-6 max-w-[2120px] mx-auto z-40 shadow-md shadow-[#a1a1a1]">
+      <motion.div
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 50 }}
+        className="flex justify-between items-center bg-[#f6f7f8] rounded-b-3xl px-4 md:px-10 py-3 md:py-6 -mt-4 fixed top-0 left-6 right-6 max-w-[2120px] mx-auto z-40 shadow-md shadow-[#a1a1a1]"
+      >
         <div className="flex items-center w-80 md:w-full">
           <div className="md:border-r-2 border-black/20 pr-6">
             <Link to="/" className="flex items-center gap-2 ">
@@ -121,6 +135,11 @@ const Navbar = () => {
                   {cart?.length === 0 ? "" : cart?.length}
                 </span>
               </li>
+              <li onClick={() => handleNotification()}>
+                <span className="text-2xl text-black">
+                  <FaBell />
+                </span>
+              </li>
             </ul>
             <div className="flex flex-row items-center gap-3">
               {/* Dropdown btn */}
@@ -134,7 +153,7 @@ const Navbar = () => {
                     <img
                       className="rounded-full object-cover size-10"
                       referrerPolicy="no-referrer"
-                      src={user && user.photoURL ? user.photoURL : 'avatarImg'}
+                      src={user && user.photoURL ? user.photoURL : "avatarImg"}
                       alt="profile"
                       height="40"
                       width="40"
@@ -150,64 +169,77 @@ const Navbar = () => {
                 </Link>
               )}
             </div>
-            {isOpen && (
-              <div className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm">
-                <div className="flex flex-col cursor-pointer">
-                  <Link
-                    to="/"
-                    className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                  >
-                    Home
-                  </Link>
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm transition-all"
+                >
+                  <div className="flex flex-col cursor-pointer">
+                    <Link
+                      to="/"
+                      className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                    >
+                      Home
+                    </Link>
 
-                  {user ? (
-                    <>
-                      <div
-                        onClick={handleUpdateProfile}
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
-                      >
-                        Profile
-                      </div>
-                      <Link
-                        to="/dashboard"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
-                      >
-                        Dashboard
-                      </Link>
-                      <div
-                        onClick={logOut}
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
-                      >
-                        Logout
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        to="/login"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        to="/signup"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                      >
-                        Sign Up
-                      </Link>
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
+                    {user ? (
+                      <>
+                        <div
+                          onClick={handleUpdateProfile}
+                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
+                        >
+                          Profile
+                        </div>
+                        <Link
+                          to="/dashboard"
+                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
+                        >
+                          Dashboard
+                        </Link>
+                        <div
+                          onClick={logOut}
+                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
+                        >
+                          Logout
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/login"
+                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                        >
+                          Login
+                        </Link>
+                        <Link
+                          to="/signup"
+                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                        >
+                          Sign Up
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
-      </div>
+      </motion.div>
       {/* Modal */}
       <ProfileModal
         openProfileModal={openProfileModal}
         setOpenProfileModal={setOpenProfileModal}
       ></ProfileModal>
+      {/*  NOTIFICATION */} 
+      {
+        showNotification && (<div className="size-96 bg-[#f6f7f8] shadow-md shadow-[#a3a3a3] rounded-lg fixed top-20 right-20 z-50">
+        </div>)
+      }
     </Container>
   );
 };
