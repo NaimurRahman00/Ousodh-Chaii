@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const CheckOut = () => {
   const { data: cart = [] } = useQuery({
@@ -55,9 +56,12 @@ const CheckOut = () => {
     return totalWithoutExtras + deliveryCharge + tax;
   };
 
+
+  const { user } = useAuth();
   const onSubmit = async (data) => {
     try {
       const orderData = {
+        user,
         ...data,
         totalAmount: calculateOrderTotalWithExtras(),
         products: cart.map((item) => ({

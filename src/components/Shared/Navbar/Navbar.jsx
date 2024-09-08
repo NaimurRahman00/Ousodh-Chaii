@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   // Notification
-  const [showNotification, setShowNotification] = useState(true);
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleNotification = () => {
     setShowNotification(!showNotification)
@@ -136,7 +136,7 @@ const Navbar = () => {
                 </span>
               </li>
               <li onClick={() => handleNotification()}>
-                <span className="text-2xl text-black">
+                <span className="text-2xl text-black cursor-pointer">
                   <FaBell />
                 </span>
               </li>
