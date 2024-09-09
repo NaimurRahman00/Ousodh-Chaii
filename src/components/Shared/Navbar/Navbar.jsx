@@ -48,6 +48,22 @@ const Navbar = () => {
     setShowNotification(!showNotification)
   }
 
+    // cart data
+  // const [cart, setCart] = useState([]);
+  const { data: myOrder = [] } = useQuery({
+    queryKey: ["ordered"],
+    queryFn: async () => getOrderedData(),
+  });
+
+  // getting cart data using axios
+  const getOrderedData = async () => {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/ordered`);
+    const data = response.data;
+    return data;
+  };
+
+myOrder.map(a => console.log(a))
+
   return (
     <Container>
       <motion.div
