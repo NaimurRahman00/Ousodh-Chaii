@@ -50,6 +50,10 @@ To clone and run this project locally, follow these steps:
 
 </br>
 
+# New Features added
+- Notification system
+
+
 # Clone the repository: git clone <repository-url>
 - Navigate into the project directory: cd ousodhchai
 - Install dependencies: npm install
