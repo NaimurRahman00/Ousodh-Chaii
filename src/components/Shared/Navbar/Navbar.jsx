@@ -45,10 +45,10 @@ const Navbar = () => {
   const [showNotification, setShowNotification] = useState(false);
 
   const handleNotification = () => {
-    setShowNotification(!showNotification)
-  }
+    setShowNotification(!showNotification);
+  };
 
-    // cart data
+  // cart data
   // const [cart, setCart] = useState([]);
   const { data: myOrder = [] } = useQuery({
     queryKey: ["ordered"],
@@ -62,7 +62,7 @@ const Navbar = () => {
     return data;
   };
 
-myOrder.map(a => console.log(a))
+  const myOrderData = myOrder.filter((mine) => mine?.userEmail == user?.email);
 
   return (
     <Container>
@@ -251,12 +251,26 @@ myOrder.map(a => console.log(a))
         openProfileModal={openProfileModal}
         setOpenProfileModal={setOpenProfileModal}
       ></ProfileModal>
-      {/*  NOTIFICATION */} 
-      {
-        showNotification && (<div className="w-96 bg-[#f6f7f8] shadow-md shadow-[#a3a3a3] rounded-lg fixed top-20 right-20 z-50">
-          <p className="text-base py-2 px-4 border-b border-gray-400">Your product has been orderd successfully!</p>
-        </div>)
-      }
+      {/*  NOTIFICATION */}
+      {showNotification && (
+        <div className="min-w-[20rem] max-w-[40rem] flex flex-col-reverse bg-[#f6f7f8] shadow-md shadow-[#707070] rounded-lg fixed top-20 right-20 z-50 overflow-hidden">
+          {
+            !myOrderData.length == 0 ? (myOrderData.map((product) => (
+              <p
+                key={product._id}
+                className="text-base flex gap-1.5 py-2.5 px-4 border-b border-gray-300 hover:bg-[#ffffff]"
+              >
+                You orderd{" "}
+                <h4 className="text-red-800 flex gap-2">
+                  {product.products.map((p, idx) => (
+                    <span key={idx}>{p?.name},</span>
+                  ))}
+                </h4>
+              </p>)
+            )) : <p className="px-2 py-4 min-w-[20rem] text-center">You have no notificaton</p>
+          }
+        </div>
+      )}
     </Container>
   );
 };
