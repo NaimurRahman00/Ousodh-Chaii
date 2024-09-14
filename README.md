@@ -4,6 +4,12 @@
 
 </br>
 
+# New Features added
+- Notification system
+- Dark and light theme
+
+</br>
+
 # OusodhChai Overview
 OusodhChai is a sophisticated web platform designed to facilitate the buying and selling of medicines. It caters to three main user roles: admin, seller, and user, each with specific functionalities tailored to their needs.
 
@@ -49,10 +55,6 @@ OusodhChai integrates robust technology with user-centric features to provide a 
 To clone and run this project locally, follow these steps:
 
 </br>
-
-# New Features added
-- Notification system
-
 
 # Clone the repository: git clone <repository-url>
 - Navigate into the project directory: cd ousodhchai
